@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order</title>
+</head>
+<body>
+    <h1>Place Your Order</h1>
+    <form method="post" action="{% url 'place_order' %}">
+        {% csrf_token %}
+        <label for="customer_name">Your Name:</label>
+        <input type="text" name="customer_name" id="customer_name" required><br><br>
+
+        <label for="product_ids">Select Products:</label><br>
+        <table border="1">
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Allergens</th>
+                <th>Available</th>
+                <th>Add</th>
+            </tr>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.category }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>${{ product.price }}</td>
+                    <td>
+                        {% if product.allergens %}
+                            {{ product.allergens }}
+                        {% else %}
+                            No allergens
+                        {% endif %}
+                    </td>
+                    <td>{% if product.available %}Yes{% else %}No{% endif %}</td>
+                    <td>
+                        {% if product.available %}
+                            <input type="checkbox" name="v-product_ids" value="{{ product.id }}"> Add
+                        {% else %}
+                            <span>Not available</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <button type="submit">Place Order</button>
+    </form>
+</body>
+</html>

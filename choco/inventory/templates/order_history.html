@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+</head>
+<body>
+    <h1>Order History</h1>
+    <ul>
+        {% for order in orders %}
+        <li>
+            <strong>Order #{{ order.id }} ({{ order.created_at }})</strong><br>
+            Customer: {{ order.customer_name }}<br>
+            Total Price: ${{ order.total_price }}<br>
+            Final Price (after discount): ${{ order.final_price }}<br>
+            Discount: {{ order.discount }}<br>
+            <ul>
+                {% for item in order.orderitem_set.all %}
+                <li>{{ item.product.name }} - ${{ item.product.price }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'home' %}">Back to Main Page</a>
+</body>
+</html>

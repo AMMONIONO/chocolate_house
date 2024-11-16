@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Error</title>
+</head>
+<body>
+    <h1>Order Error</h1>
+    <p>{{ message }}</p>
+
+    {% if unavailable_products %}
+    <h3>Unavailable Products:</h3>
+    <ul>
+        {% for product_id in unavailable_products %}
+        <li>Product ID: {{ product_id }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <a href="{% url 'home' %}">Go Back to Main Page</a>
+</body>
+</html>

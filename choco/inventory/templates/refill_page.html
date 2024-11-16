@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refill Ingredients</title>
+</head>
+<body>
+    <h1>Refill Ingredients and View Inventory</h1>
+
+    <h2>Ingredients Stock</h2>
+    <table border="1">
+        <tr>
+            <th>Ingredient Name</th>
+            <th>Stock Quantity</th>
+            <th>Allergy Info</th>
+            <th>Refill Amount</th>
+        </tr>
+        {% for ingredient in ingredients %}
+        <tr>
+            <td>{{ ingredient.name }}</td>
+            <td>{{ ingredient.stock }}</td>
+            <td>{{ ingredient.allergy_info }}</td>
+            <td>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="ingredient_id" value="{{ ingredient.id }}">
+                    <input type="number" name="refill_amount" min="1" placeholder="Amount to refill" required>
+                    <button type="submit">Refill</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Product List</h2>
+    <table border="1">
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Available</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{% if product.available %}Yes{% else %}No{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
